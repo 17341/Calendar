@@ -1,0 +1,30 @@
+<div
+  class="container-sm"
+  style="text-align: center; width: 33%; margin-top: 10%"
+>
+  <mdb-form-control>
+    <input mdbLabel type="email" id="typeEmail" class="form-control" />
+    <label mdbInput class="form-label" for="typeEmail">Email</label>
+  </mdb-form-control>
+  <mdb-form-control style="margin-top: 1%">
+    <input mdbLabel type="password" id="typePassword" class="form-control" />
+    <label mdbInput class="form-label" for="typePassword">Password</label>
+  </mdb-form-control>
+  <button
+    style="margin-top: 2%; width: 100%"
+    type="button"
+    class="btn btn-primary"
+  >
+    Login
+  </button>
+  <hr color="black" />
+  <h4>No account yet ?</h4>
+  <button
+    style="margin-top: 2%; width: 100%"
+    type="button"
+    class="btn btn-success"
+    (click)="registerClick()"
+  >
+    Register
+  </button>
+</div>

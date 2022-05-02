@@ -6,6 +6,12 @@ let app = express();
 
 app.use(express.json());
 
+const cors = require('cors');
+
+app.use(cors({
+    origin: 'http://localhost:4200'
+}));
+
 const db = require('./db.js')
 
 // Creating all the tables

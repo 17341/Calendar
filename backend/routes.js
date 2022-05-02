@@ -29,5 +29,6 @@ router.delete('/event/:event_id', eventController.eventDelete);
 router.delete('/company/:company_id', companyController.companyDelete);
 router.delete('/exchange/:exchange_id', exchangeController.exchangeDelete);
 
+router.post('/auth/login', userController.userLogin);
 
 module.exports = router;

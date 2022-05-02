@@ -44,7 +44,6 @@ exports.userUpdate = async function (req, res) {
 };
 
 exports.userDelete = async function (req, res) {
-    console.log(req)
     if (req.params.user_id) {
         await User.destroy({ where: { user_id: req.params.user_id } })
             .then(data => {
@@ -57,4 +56,18 @@ exports.userDelete = async function (req, res) {
     else res.status(400).json({ message: 'User not found' })
 };
 
+exports.userLogin = async function (req, res) {
+    await User.findOne({
+        where: {
+            email: req.body.email,
+            password: req.body.password
+        }
+    })
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            res.status(500).json({ message: err.message })
+        })
+};
 
