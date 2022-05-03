@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Login } from '../interfaces/Login';
 import { Register } from '../interfaces/Register';
 
-const AUTH_API = 'http://localhost:8000/auth/';
+const AUTH_API = 'http://localhost:8000/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
@@ -19,6 +19,6 @@ export class AuthenticationService {
   }
 
   register(register: Register): Observable<any> {
-    return this.http.post(AUTH_API + 'register', register, httpOptions);
+    return this.http.post(AUTH_API + 'user', register, httpOptions);
   }
 }

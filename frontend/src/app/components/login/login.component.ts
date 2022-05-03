@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
-import { Login } from '../../interfaces/Login';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,6 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  email: string = '';
+  password: string = '';
   isLogin = false;
   errorMessage = false;
   constructor(
@@ -18,19 +19,23 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onLogin(login: Login) {
-    this.authService.login(login).subscribe(
-      (data) => {
-        if (data !== null) {
-          console.log(data);
-          this.isLogin = true;
+  onLogin() {
+    this.authService
+      .login({ email: this.email, password: this.password })
+      .subscribe(
+        (data) => {
+          if (data) {
+            alert(`Logged in as: ${data.first_name} ${data.last_name}`);
+            this.isLogin = true;
+          } else {
+            alert('Not found');
+            this.isLogin = false;
+          }
+        },
+        (err) => {
+          this.errorMessage = err;
         }
-        this.isLogin = false;
-      },
-      (err) => {
-        this.errorMessage = err;
-      }
-    );
+      );
   }
   registerClick() {
     this.router.navigateByUrl('/register');

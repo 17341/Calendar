@@ -8,17 +8,40 @@ import { Register } from '../../interfaces/Register';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  //Form variables
+  lastName: string = '';
+  firstName: string = '';
+  email: string = '';
+  password: string = '';
+  password2: string = '';
   isRegister = false;
   errorMessage = false;
+
   constructor(private authService: AuthenticationService) {}
 
   ngOnInit(): void {}
 
+  onSubmit() {
+    if (this.password !== this.password2) {
+      alert('Password mismatch');
+    } else {
+      this.onRegister({
+        last_name: this.lastName,
+        first_name: this.firstName,
+        email: this.email,
+        password: this.password,
+        role: 'Member',
+      });
+    }
+  }
+
   onRegister(register: Register) {
-    this.authService.login(register).subscribe(
+    this.authService.register(register).subscribe(
       (data) => {
-        if (data.success === true) {
+        console.log(data);
+        if (data) {
           console.log(data);
+          alert('Registered.');
           this.isRegister = true;
         }
         this.isRegister = false;

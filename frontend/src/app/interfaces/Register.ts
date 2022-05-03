@@ -4,5 +4,4 @@ export interface Register {
   last_name: string;
   email: string;
   password: string;
-  company_id: number;
 }

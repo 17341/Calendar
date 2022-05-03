@@ -1,5 +1,6 @@
 const db = require('../models/index');
 const User = db.User;
+const Company = db.Company;
 
 exports.userList = async function (req, res) {
     await User.findAll()
@@ -12,20 +13,34 @@ exports.userList = async function (req, res) {
         })
 };
 
+exports.userLogin = async function (req, res) {
+    await User.findOne({
+        where: {
+            email: req.body.email,
+            password: req.body.password
+        }
+    })
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            res.status(500).json({ message: err.message })
+        })
+};
+
 exports.userCreate = async function (req, res) {
-    let user = await User.create({
-        last_name: req.query.last_name,
-        first_name: req.query.first_name,
-        company_id: req.query.company_id,
-        email: req.query.email,
-        password: req.query.password,
-        role: req.query.role
+    await User.create({
+        last_name: req.body.last_name,
+        first_name: req.body.first_name,
+        email: req.body.email,
+        password: req.body.password,
+        role: req.body.role
     }).then(data => {
-        console.log(user.toJSON());
         res.json(data);
     }).catch(err => {
         res.status(500).json({ message: err.message })
     })
+
 };
 
 exports.userUpdate = async function (req, res) {
@@ -54,20 +69,5 @@ exports.userDelete = async function (req, res) {
             })
     }
     else res.status(400).json({ message: 'User not found' })
-};
-
-exports.userLogin = async function (req, res) {
-    await User.findOne({
-        where: {
-            email: req.body.email,
-            password: req.body.password
-        }
-    })
-        .then(data => {
-            res.json(data);
-        })
-        .catch(err => {
-            res.status(500).json({ message: err.message })
-        })
 };
 
