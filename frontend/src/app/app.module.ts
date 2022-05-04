@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
@@ -25,8 +25,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 import { FormsModule } from '@angular/forms';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -35,9 +36,11 @@ import { FormsModule } from '@angular/forms';
     LoginComponent,
     RegisterComponent,
     FooterComponent,
+    AuthPageComponent,
     LandingPageComponent,
   ],
   imports: [
+    ReactiveFormsModule,
     NgCalendarModule,
     BrowserModule,
     AppRoutingModule,

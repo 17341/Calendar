@@ -1,26 +1,18 @@
 <form
   (ngSubmit)="onLogin()"
+  [formGroup]="form"
   class="container-sm"
   style="text-align: center; width: 33%; margin-top: 10%"
 >
   <mdb-form-control>
-    <input
-      [(ngModel)]="email"
-      mdbInput
-      type="email"
-      name="email"
-      id="Email"
-      class="form-control"
-    />
+    <input formControlName="email" mdbInput type="email" class="form-control" />
     <label mdbLabel class="form-label" for="email">Email</label>
   </mdb-form-control>
   <mdb-form-control style="margin-top: 1%">
     <input
-      [(ngModel)]="password"
+      formControlName="password"
       mdbInput
       type="password"
-      name="password"
-      id="password"
       class="form-control"
     />
     <label mdbLabel class="form-label" for="password">Password</label>

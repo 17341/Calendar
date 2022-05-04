@@ -1,5 +1,6 @@
 <form
   (ngSubmit)="onSubmit()"
+  [formGroup]="form"
   class="container-sm"
   style="width: 33%; margin-top: 10%"
 >
@@ -7,9 +8,7 @@
     <input
       mdbInput
       type="text"
-      name="lastName"
-      id="lastName"
-      [(ngModel)]="lastName"
+      formControlName="lastName"
       class="form-control"
     />
     <label mdbLabel class="form-label" for="lastName">Last Name</label>
@@ -18,31 +17,20 @@
     <input
       mdbInput
       type="text"
-      name="firstName"
-      id="firstName"
-      [(ngModel)]="firstName"
+      formControlName="firstName"
       class="form-control"
     />
     <label mdbLabel class="form-label" for="firstName">First Name</label>
   </mdb-form-control>
   <mdb-form-control style="margin-top: 2%">
-    <input
-      mdbInput
-      name="email"
-      type="email"
-      id="email"
-      [(ngModel)]="email"
-      class="form-control"
-    />
+    <input mdbInput type="email" formControlName="email" class="form-control" />
     <label mdbLabel class="form-label" for="email">Email</label>
   </mdb-form-control>
   <mdb-form-control style="margin-top: 2%">
     <input
       mdbInput
-      name="password"
       type="password"
-      [(ngModel)]="password"
-      id="password"
+      formControlName="password"
       class="form-control"
     />
     <label mdbLabel class="form-label" for="password">Password</label>
@@ -52,9 +40,7 @@
     <input
       mdbInput
       type="password"
-      name="password2"
-      [(ngModel)]="password2"
-      id="password2"
+      formControlName="password2"
       class="form-control"
     />
     <label mdbLabel class="form-label" for="password2">Confirm Password</label>
@@ -66,5 +52,15 @@
     class="btn btn-primary"
   >
     Submit
+  </button>
+  <hr color="black" />
+  <h4 style="text-align: center">Already have an account ?</h4>
+  <button
+    style="margin-top: 2%; width: 100%"
+    type="button"
+    class="btn btn-success"
+    (click)="loginClick()"
+  >
+    Login
   </button>
 </form>

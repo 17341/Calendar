@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,13 +11,13 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  registerClick() {
-    this.router.navigateByUrl('/register');
+  createClick() {
+    //this.router.navigateByUrl('/register');
   }
-  loginClick() {
-    this.router.navigateByUrl('/login');
+  joinClick() {
+    //this.router.navigateByUrl('/login');
   }
   navbarClick() {
-    this.router.navigateByUrl('/');
+    //this.router.navigateByUrl('/');
   }
 }

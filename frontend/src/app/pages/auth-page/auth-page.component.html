@@ -1,0 +1,10 @@
+<div>
+  <app-login
+    *ngIf="loginClicked"
+    (onRegisterClick)="registerClick()"
+  ></app-login>
+  <app-register
+    *ngIf="!loginClicked"
+    (onLoginClick)="loginClick()"
+  ></app-register>
+</div>

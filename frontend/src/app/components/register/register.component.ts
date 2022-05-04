@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Register } from '../../interfaces/Register';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -8,28 +9,34 @@ import { Register } from '../../interfaces/Register';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  //Form variables
-  lastName: string = '';
-  firstName: string = '';
-  email: string = '';
-  password: string = '';
-  password2: string = '';
   isRegister = false;
   errorMessage = false;
 
+  form = new FormGroup({
+    lastName: new FormControl('', Validators.required),
+    firstName: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    password2: new FormControl('', Validators.required),
+  });
+
   constructor(private authService: AuthenticationService) {}
+
+  @Output() onLoginClick = new EventEmitter();
 
   ngOnInit(): void {}
 
   onSubmit() {
-    if (this.password !== this.password2) {
+    if (
+      this.form.get('password')?.value !== this.form.get('password2')?.value
+    ) {
       alert('Password mismatch');
     } else {
       this.onRegister({
-        last_name: this.lastName,
-        first_name: this.firstName,
-        email: this.email,
-        password: this.password,
+        last_name: this.form.get('lastName')?.value,
+        first_name: this.form.get('firstName')?.value,
+        email: this.form.get('email')?.value,
+        password: this.form.get('password')?.value,
         role: 'Member',
       });
     }
@@ -43,6 +50,7 @@ export class RegisterComponent implements OnInit {
           console.log(data);
           alert('Registered.');
           this.isRegister = true;
+          this.form.reset();
         }
         this.isRegister = false;
       },
@@ -50,5 +58,9 @@ export class RegisterComponent implements OnInit {
         this.errorMessage = err;
       }
     );
+  }
+
+  loginClick() {
+    this.onLoginClick.emit();
   }
 }
