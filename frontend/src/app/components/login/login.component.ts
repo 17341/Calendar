@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
-import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -17,10 +16,7 @@ export class LoginComponent implements OnInit {
   });
   errorMessage = false;
 
-  constructor(
-    private authService: AuthenticationService,
-    private router: Router
-  ) {}
+  constructor(private authService: AuthenticationService) {}
 
   ngOnInit(): void {}
 
@@ -37,8 +33,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (data) => {
           if (data) {
-            console.log(data);
-            alert(`Logged in as: ${data.first_name} ${data.last_name}`);
+            alert(`Logged in`);
             this.authService.changeLoginState(true);
           } else {
             alert('Not found');

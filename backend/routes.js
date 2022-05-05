@@ -1,5 +1,8 @@
+require('dotenv').config()
+
 let express = require('express');
 let router = express.Router();
+const jwt = require('jsonwebtoken')
 
 // Import controllers
 const userController = require('./controllers/userController');
@@ -7,11 +10,23 @@ const companyController = require('./controllers/companyController');
 const eventController = require('./controllers/eventController');
 const exchangeController = require('./controllers/exchangeController');
 
-router.get('/', (req, res) => res.redirect('/user'));
-router.get('/user', userController.userList);
-router.get('/event', eventController.eventList);
-router.get('/company', companyController.companyList);
-router.get('/exchange', exchangeController.exchangeList);
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if (token == null) return res.sendStatus(401)
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403)
+        req.user = user
+        next()
+    })
+}
+
+router.get('/', authenticateToken, (req, res) => res.status(200).send({ message: 'Auth success' }));
+router.get('/user', authenticateToken, userController.userList);
+router.get('/event', authenticateToken, eventController.eventList);
+router.get('/company', authenticateToken, companyController.companyList);
+router.get('/exchange', authenticateToken, exchangeController.exchangeList);
 
 router.post('/user', userController.userCreate);
 router.post('/company', companyController.companyCreate);

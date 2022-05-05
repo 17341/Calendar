@@ -4,7 +4,6 @@ const Company = db.Company;
 exports.companyList = async function (req, res) {
     await Company.findAll()
         .then(data => {
-            console.log("All companies:", JSON.stringify(data, null, 2));
             res.json(data);
         })
         .catch(err => {
@@ -14,10 +13,9 @@ exports.companyList = async function (req, res) {
 
 exports.companyCreate = async function (req, res) {
     let company = await Company.create({
-        name: req.query.name,
-        password: req.query.password,
+        name: req.body.name,
+        password: req.body.password,
     }).then(data => {
-        console.log(company.toJSON());
         res.json(data);
     }).catch(err => {
         res.status(500).json({ message: err.message })
@@ -27,7 +25,7 @@ exports.companyCreate = async function (req, res) {
 exports.companyUpdate = async function (req, res) {
     if (req.params.company_id > 0) {
         await Company.update(
-            req.query, { where: { company_id: req.params.company_id } }
+            req.body, { where: { company_id: req.params.company_id } }
         )
             .then(data => {
                 res.json(data);

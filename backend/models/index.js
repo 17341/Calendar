@@ -9,6 +9,7 @@ db.User = require('../models/userModel');
 db.Event = require('../models/eventModel');
 db.Exchange = require('../models/exchangeModel');
 db.Company = require('../models/companyModel');
+db.Token = require('../models/tokenModel');
 
 db.Company.hasMany(db.User, { foreignKey: "company_id" });
 db.User.belongsTo(db.Company, { foreignKey: "company_id" });

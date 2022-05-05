@@ -1,11 +1,9 @@
 const db = require('../models/index');
 const User = db.User;
-const Company = db.Company;
 
 exports.userList = async function (req, res) {
     await User.findAll()
         .then(data => {
-            console.log("All users:", JSON.stringify(data, null, 2));
             res.json(data);
         })
         .catch(err => {
@@ -13,7 +11,7 @@ exports.userList = async function (req, res) {
         })
 };
 
-exports.userLogin = async function (req, res) {
+exports.userLogin = async function (req, res, next) {
     await User.findOne({
         where: {
             email: req.body.email,
@@ -21,7 +19,12 @@ exports.userLogin = async function (req, res) {
         }
     })
         .then(data => {
-            res.json(data);
+            if (data) {
+                next()
+            }
+            else {
+                res.status(404).json({ message: "Incorrect login" })
+            }
         })
         .catch(err => {
             res.status(500).json({ message: err.message })
@@ -29,12 +32,15 @@ exports.userLogin = async function (req, res) {
 };
 
 exports.userCreate = async function (req, res) {
-    await User.create({
-        last_name: req.body.last_name,
-        first_name: req.body.first_name,
-        email: req.body.email,
-        password: req.body.password,
-        role: req.body.role
+    await User.findOrCreate({
+        where: { email: req.body.email }, defaults: {
+            last_name: req.body.last_name,
+            first_name: req.body.first_name,
+            email: req.body.email,
+            password: req.body.password,
+            role: req.body.role
+        }
+
     }).then(data => {
         res.json(data);
     }).catch(err => {
@@ -46,7 +52,7 @@ exports.userCreate = async function (req, res) {
 exports.userUpdate = async function (req, res) {
     if (req.params.user_id > 0) {
         await User.update(
-            req.query, { where: { user_id: req.params.user_id } }
+            req.body, { where: { user_id: req.params.user_id } }
         )
             .then(data => {
                 res.json(data);

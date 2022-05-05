@@ -13,11 +13,26 @@ export class RegisterComponent implements OnInit {
   errorMessage = false;
 
   form = new FormGroup({
-    lastName: new FormControl('', Validators.required),
-    firstName: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
-    password2: new FormControl('', Validators.required),
+    lastName: new FormControl(
+      '',
+      Validators.compose([Validators.required, Validators.minLength(2)])
+    ),
+    firstName: new FormControl(
+      '',
+      Validators.compose([Validators.required, Validators.minLength(2)])
+    ),
+    email: new FormControl(
+      '',
+      Validators.compose([Validators.email, Validators.required])
+    ),
+    password: new FormControl(
+      '',
+      Validators.compose([Validators.required, Validators.minLength(6)])
+    ),
+    password2: new FormControl(
+      '',
+      Validators.compose([Validators.required, Validators.minLength(6)])
+    ),
   });
 
   constructor(private authService: AuthenticationService) {}
@@ -43,11 +58,12 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegister(register: Register) {
+    if (this.form.invalid) {
+      return;
+    }
     this.authService.register(register).subscribe(
       (data) => {
-        console.log(data);
         if (data) {
-          console.log(data);
           alert('Registered.');
           this.isRegister = true;
           this.form.reset();

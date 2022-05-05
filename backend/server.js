@@ -1,15 +1,13 @@
 // Import express 
 let express = require('express');
+const cors = require('cors');
 
 // Initialize the app 
 let app = express();
 
 app.use(express.json());
-
-const cors = require('cors');
-
 app.use(cors({
-    origin: 'http://localhost:4200'
+    origin: ['http://localhost:4200', 'http://localhost:4000'], credentials: true
 }));
 
 const db = require('./db.js')
