@@ -29,6 +29,20 @@ import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 import { FormsModule } from '@angular/forms';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { ModalComponent } from './components/modal/modal.component';
+import listPlugin from '@fullcalendar/list';
+
+FullCalendarModule.registerPlugins([
+  listPlugin,
+  timeGridPlugin,
+  dayGridPlugin,
+  interactionPlugin,
+]);
 
 @NgModule({
   declarations: [
@@ -39,6 +53,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     FooterComponent,
     AuthPageComponent,
     LandingPageComponent,
+    CalendarComponent,
+    ModalComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -63,6 +79,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    FullCalendarModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

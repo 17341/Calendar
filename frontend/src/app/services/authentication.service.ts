@@ -26,6 +26,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient, private cookieService: CookieService) {
     let accessToken = this.cookieService.get('accessToken');
 
+    //verify if accessToken is valid
     if (accessToken) {
       this.http.get(apiUrl, httpOptions).subscribe(
         () => {

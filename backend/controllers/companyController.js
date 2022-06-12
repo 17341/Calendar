@@ -12,7 +12,7 @@ exports.companyList = async function (req, res) {
 };
 
 exports.companyCreate = async function (req, res) {
-    let company = await Company.create({
+    await Company.create({
         name: req.body.name,
         password: req.body.password,
     }).then(data => {

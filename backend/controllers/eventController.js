@@ -17,7 +17,7 @@ exports.eventCreate = async function (req, res) {
         end_at: req.body.end_at,
         description: req.body.description,
         status: req.body.status,
-        event_id: req.body.event_id
+        user_id: req.body.user_id
     }).then(data => {
 
         res.json(data);

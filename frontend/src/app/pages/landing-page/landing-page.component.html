@@ -1,1 +1,17 @@
-<p>landing-page works!</p>
+<div
+  style="display: flex; flex-direction: column; justify-content: space-between"
+>
+  <br />
+  <div
+    style="display: flex; flex-direction: row; justify-content: space-evenly"
+  >
+    <button class="btn btn-primary" (click)="onAdd()">Add event</button>
+    <select [ngModel]="selected" (ngModelChange)="onChange($event)">
+      <option value="dayGridMonth">Month View</option>
+      <option value="timeGridWeek">TimeGrid View</option>
+      <option value="listWeek">List View</option>
+      <option value="dayGridWeek">DayGrid View</option>
+    </select>
+  </div>
+  <app-calendar [view]="selected"></app-calendar>
+</div>
