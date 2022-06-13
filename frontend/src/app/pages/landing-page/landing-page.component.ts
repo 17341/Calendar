@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -9,8 +10,12 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 })
 export class LandingPageComponent implements OnInit {
   selected = 'dayGridMonth';
+
   modalRef: MdbModalRef<ModalComponent> | null = null;
-  constructor(private modalService: MdbModalService) {}
+  constructor(
+    private modalService: MdbModalService,
+    private sharedService: SharedServiceService
+  ) {}
 
   ngOnInit(): void {}
 

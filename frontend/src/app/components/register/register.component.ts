@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Register } from '../../interfaces/Register';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -33,9 +33,16 @@ export class RegisterComponent implements OnInit {
       '',
       Validators.compose([Validators.required, Validators.minLength(6)])
     ),
+    role: new FormControl(
+      'Team Member',
+      Validators.compose([Validators.required])
+    ),
   });
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {}
 
   @Output() onLoginClick = new EventEmitter();
 
@@ -52,7 +59,7 @@ export class RegisterComponent implements OnInit {
         first_name: this.form.get('firstName')?.value,
         email: this.form.get('email')?.value,
         password: this.form.get('password')?.value,
-        role: 'Member',
+        role: this.form.get('role')?.value,
       });
     }
   }
@@ -67,6 +74,7 @@ export class RegisterComponent implements OnInit {
           alert('Registered.');
           this.isRegister = true;
           this.form.reset();
+          window.location.reload();
         }
         this.isRegister = false;
       },
@@ -78,5 +86,6 @@ export class RegisterComponent implements OnInit {
 
   loginClick() {
     this.onLoginClick.emit();
+    //this.router.navigateByUrl('/login');
   }
 }

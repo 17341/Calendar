@@ -3,7 +3,7 @@
 >
   <br />
   <div
-    style="display: flex; flex-direction: row; justify-content: space-evenly"
+    style="display: flex; flex-direction: row; justify-content: space-around"
   >
     <button class="btn btn-primary" (click)="onAdd()">Add event</button>
     <select [ngModel]="selected" (ngModelChange)="onChange($event)">
@@ -13,5 +13,6 @@
       <option value="dayGridWeek">DayGrid View</option>
     </select>
   </div>
+  <br />
   <app-calendar [view]="selected"></app-calendar>
 </div>

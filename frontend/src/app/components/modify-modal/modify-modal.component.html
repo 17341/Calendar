@@ -1,0 +1,53 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Modify event</h5>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="modalRef.close()"
+  ></button>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form" class="container-sm">
+    <br />
+    <mdb-form-control>
+      <label mdbLabel class="form-label" for="start">Start : </label>
+      <input formControlName="start" mdbInput type="datetime-local" />
+    </mdb-form-control>
+    <br />
+    <mdb-form-control>
+      <label mdbLabel class="form-label" for="end">End : </label>
+      <input formControlName="end" mdbInput type="datetime-local" />
+    </mdb-form-control>
+    <br />
+    <mdb-form-control>
+      <textarea formControlName="description" mdbInput class="form-control">
+      </textarea>
+      <label mdbLabel class="form-label" for="description"
+        >Description(optional)</label
+      >
+    </mdb-form-control>
+    <br />
+    <mdb-form-control>
+      <label mdbLabel class="form-label" for="user">User</label>
+      <select id="user" formControlName="user">
+        <option *ngFor="let user of users" value="{{ user.user_id }}">
+          {{ user.last_name }} {{ user.first_name }}
+        </option>
+      </select>
+    </mdb-form-control>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="modalRef.close()"
+      >
+        Cancel
+      </button>
+      <button type="button" class="btn btn-danger" (click)="onDelete()">
+        Delete
+      </button>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+  </form>
+</div>

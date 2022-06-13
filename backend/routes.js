@@ -25,24 +25,25 @@ function authenticateToken(req, res, next) {
 router.get('/', authenticateToken, (req, res) => res.status(200).send({ message: 'Auth success' }));
 router.get('/user', authenticateToken, userController.userList);
 router.get('/event', authenticateToken, eventController.eventList);
+router.get('/event/:event_id', eventController.eventSearch);
 router.get('/company', authenticateToken, companyController.companyList);
 router.get('/exchange', authenticateToken, exchangeController.exchangeList);
 
-router.post('/user', userController.userCreate);
-router.post('/company', companyController.companyCreate);
-router.post('/event', eventController.eventCreate);
-router.post('/exchange', exchangeController.exchangeCreate);
+router.post('/user', authenticateToken, userController.userCreate);
+router.post('/company', authenticateToken, companyController.companyCreate);
+router.post('/event', authenticateToken, eventController.eventCreate);
+router.post('/exchange', authenticateToken, exchangeController.exchangeCreate);
 
-router.put('/user/:user_id', userController.userUpdate);
-router.put('/event/:event_id', eventController.eventUpdate);
-router.put('/company/:company_id', companyController.companyUpdate);
-router.put('/exchange/:exchange_id', exchangeController.exchangeUpdate);
+router.put('/user/:user_email', authenticateToken, userController.userUpdate);
+router.put('/event/:event_id', authenticateToken, eventController.eventUpdate);
+router.put('/company/:company_id', authenticateToken, companyController.companyUpdate);
+router.put('/exchange/:exchange_id', authenticateToken, exchangeController.exchangeUpdate);
 
 
-router.delete('/user/:user_id', userController.userDelete);
-router.delete('/event/:event_id', eventController.eventDelete);
-router.delete('/company/:company_id', companyController.companyDelete);
-router.delete('/exchange/:exchange_id', exchangeController.exchangeDelete);
+router.delete('/user/:user_id', authenticateToken, userController.userDelete);
+router.delete('/event/:event_id', authenticateToken, eventController.eventDelete);
+router.delete('/company/:company_id', authenticateToken, companyController.companyDelete);
+router.delete('/exchange/:exchange_id', authenticateToken, exchangeController.exchangeDelete);
 
 router.post('/login', userController.userLogin);
 

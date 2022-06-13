@@ -50,18 +50,15 @@ exports.userCreate = async function (req, res) {
 };
 
 exports.userUpdate = async function (req, res) {
-    if (req.params.user_id > 0) {
-        await User.update(
-            req.body, { where: { user_id: req.params.user_id } }
-        )
-            .then(data => {
-                res.json(data);
-            })
-            .catch(err => {
-                res.status(500).json({ message: err.message })
-            })
-    }
-    else res.status(400).json({ message: 'User not found' })
+    await User.update(
+        req.body, { where: { email: req.params.user_email } }
+    )
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            res.status(500).json({ message: err.message })
+        })
 };
 
 exports.userDelete = async function (req, res) {

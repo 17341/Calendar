@@ -36,6 +36,9 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ModalComponent } from './components/modal/modal.component';
 import listPlugin from '@fullcalendar/list';
+import { JoinPageComponent } from './pages/join-page/join-page.component';
+import { CreatePageComponent } from './pages/create-page/create-page.component';
+import { ModifyModalComponent } from './components/modify-modal/modify-modal.component';
 
 FullCalendarModule.registerPlugins([
   listPlugin,
@@ -55,6 +58,9 @@ FullCalendarModule.registerPlugins([
     LandingPageComponent,
     CalendarComponent,
     ModalComponent,
+    JoinPageComponent,
+    CreatePageComponent,
+    ModifyModalComponent,
   ],
   imports: [
     ReactiveFormsModule,

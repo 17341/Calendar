@@ -33,6 +33,8 @@ app.post('/token', tokenController.tokenSearch, (req, res) => {
 
 app.post('/logout', tokenController.tokenDelete)
 
+app.post('/userByToken', tokenController.userByToken)
+
 app.post('/login', userController.userLogin, (req, res) => {
 
     const email = req.body.email
@@ -60,7 +62,7 @@ app.post('/login', userController.userLogin, (req, res) => {
 })
 
 function generateAccessToken(user) {
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '3600s' })
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '36000s' })
 }
 
 app.listen(4000)

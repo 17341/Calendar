@@ -12,7 +12,7 @@ exports.eventList = async function (req, res) {
 };
 
 exports.eventCreate = async function (req, res) {
-    let event = await Event.create({
+    await Event.create({
         start_at: req.body.start_at,
         end_at: req.body.end_at,
         description: req.body.description,
@@ -29,6 +29,20 @@ exports.eventCreate = async function (req, res) {
 exports.eventUpdate = async function (req, res) {
     if (req.params.event_id > 0) {
         await Event.update(
+            req.body, { where: { event_id: req.params.event_id } }
+        )
+            .then(data => {
+                res.json(data);
+            })
+            .catch(err => {
+                res.status(500).json({ message: err.message })
+            })
+    }
+    else res.status(400).json({ message: 'event not found' })
+};
+exports.eventSearch = async function (req, res) {
+    if (req.params.event_id > 0) {
+        await Event.findOne(
             req.body, { where: { event_id: req.params.event_id } }
         )
             .then(data => {

@@ -62,4 +62,11 @@ export class AuthenticationService {
   register(register: Register): Observable<any> {
     return this.http.post(apiUrl + 'user', register, httpOptions);
   }
+  userByToken(): Observable<any> {
+    return this.http.post(
+      authUrl + 'userByToken',
+      { refreshToken: this.cookieService.get('refreshToken') },
+      httpOptions
+    );
+  }
 }

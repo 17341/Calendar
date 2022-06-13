@@ -1,0 +1,41 @@
+<form
+  (ngSubmit)="onSubmit()"
+  [formGroup]="form"
+  class="container-sm"
+  style="width: 33%; margin-top: 10%"
+>
+  <mdb-form-control style="margin-top: 2%">
+    <input
+      mdbInput
+      type="text"
+      formControlName="companyName"
+      class="form-control"
+    />
+    <label mdbLabel class="form-label" for="companyName">Company Name</label>
+  </mdb-form-control>
+  <mdb-form-control style="margin-top: 2%">
+    <input
+      mdbInput
+      type="password"
+      formControlName="password"
+      class="form-control"
+    />
+    <label mdbLabel class="form-label" for="password">Password</label>
+  </mdb-form-control>
+  <br />
+  <!--<label mdbLabel class="form-label" for="users">Invite users </label>
+   <mdb-form-control>
+    <select multiple id="users" formControlName="users">
+      <option *ngFor="let user of users" value="{{ user.user_id }}">
+        {{ user.last_name }} {{ user.first_name }}
+      </option>
+    </select>
+  </mdb-form-control> -->
+  <button
+    style="margin-top: 2%; width: 100%"
+    type="submit"
+    class="btn btn-success"
+  >
+    Create
+  </button>
+</form>

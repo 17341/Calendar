@@ -45,7 +45,12 @@
     />
     <label mdbLabel class="form-label" for="password2">Confirm Password</label>
   </mdb-form-control>
-
+  <mdb-form-control style="margin-top: 2%">
+    <select mdbInput id="role" formControlName="role">
+      <option value="Team Member">Team Member</option>
+      <option value="Team Leader">Team Leader</option>
+    </select>
+  </mdb-form-control>
   <button
     style="margin-top: 2%; width: 100%"
     type="submit"

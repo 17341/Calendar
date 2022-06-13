@@ -1,6 +1,8 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular';
 import { DataService } from '../../services/data.service';
+import { ModifyModalComponent } from '../../components/modify-modal/modify-modal.component';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
 @Component({
   selector: 'app-calendar',
@@ -10,22 +12,28 @@ import { DataService } from '../../services/data.service';
 export class CalendarComponent implements OnInit {
   @Input() view: any;
 
+  modalRef: MdbModalRef<ModifyModalComponent> | null = null;
   calendarOptions: CalendarOptions = {
-    eventClick: function (info) {
-      info.el.style.borderColor = 'red';
-    },
+    // headerToolbar: { center: 'dayGridMonth,timeGridWeek,listWeek,dayGridWeek' },
+    eventClick: this.eventClick.bind(this),
     initialView: 'dayGridMonth',
     dateClick: this.handleDateClick.bind(this),
     events: [],
     height: 700,
-    eventDrop: this.handleDrag.bind(this),
+    eventDrop: this.handleUpdate.bind(this),
+    eventResize: this.handleUpdate.bind(this),
   };
 
-  handleDateClick(arg: any) {}
+  handleDateClick(arg: any) {
+    console.log(arg);
+  }
 
   @ViewChild('calendar', { static: true }) calendar: any;
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private modalService: MdbModalService
+  ) {}
 
   ngOnInit(): void {
     let events: any = [];
@@ -37,6 +45,7 @@ export class CalendarComponent implements OnInit {
             start: event.start_at,
             end: event.end_at,
             editable: true,
+            durationEditable: true,
             description: event.description,
             id: event.event_id,
           });
@@ -52,7 +61,7 @@ export class CalendarComponent implements OnInit {
     let calendarApi = this.calendar.getApi();
     calendarApi.changeView(this.view);
   }
-  handleDrag(arg: any) {
+  handleUpdate(arg: any) {
     let newEvent = {
       start_at: arg.event.startStr,
       end_at: arg.event.endStr,
@@ -65,5 +74,10 @@ export class CalendarComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+  eventClick(info: any) {
+    info.el.style.backgroundColor = 'red';
+    localStorage.setItem('selectedEvent', info.event.id);
+    this.modalRef = this.modalService.open(ModifyModalComponent);
   }
 }
