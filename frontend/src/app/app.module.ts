@@ -39,6 +39,8 @@ import listPlugin from '@fullcalendar/list';
 import { JoinPageComponent } from './pages/join-page/join-page.component';
 import { CreatePageComponent } from './pages/create-page/create-page.component';
 import { ModifyModalComponent } from './components/modify-modal/modify-modal.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { ExchangeModalComponent } from './components/exchange-modal/exchange-modal.component';
 
 FullCalendarModule.registerPlugins([
   listPlugin,
@@ -61,6 +63,8 @@ FullCalendarModule.registerPlugins([
     JoinPageComponent,
     CreatePageComponent,
     ModifyModalComponent,
+    ProfilePageComponent,
+    ExchangeModalComponent,
   ],
   imports: [
     ReactiveFormsModule,

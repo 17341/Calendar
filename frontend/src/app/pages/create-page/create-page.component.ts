@@ -2,13 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+
 @Component({
   selector: 'app-create-page',
   templateUrl: './create-page.component.html',
   styleUrls: ['./create-page.component.scss'],
 })
 export class CreatePageComponent implements OnInit {
-  //users: any;
+  user: any;
 
   form = new FormGroup({
     companyName: new FormControl(
@@ -21,19 +24,24 @@ export class CreatePageComponent implements OnInit {
     ),
     // users: new FormControl([]),
   });
-  constructor(private dataService: DataService, private router: Router) {}
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+    private sharedService: SharedServiceService,
+    private authService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {
-    // this.dataService.usersList().subscribe(
-    //   (data) => {
-    //     if (data) {
-    //       this.users = data.filter((user: any) => user.role === 'Team Member');
-    //     }
-    //   },
-    //   (err) => {
-    //     alert('Error ' + err);
-    //   }
-    // );
+    this.authService.userByToken().subscribe(
+      (data) => {
+        if (data) {
+          this.user = data;
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   onSubmit(): void {
@@ -51,8 +59,23 @@ export class CreatePageComponent implements OnInit {
         (data) => {
           if (data) {
             alert('Company created');
-
-            this.router.navigateByUrl('/');
+            this.dataService
+              .userUpdate(
+                {
+                  company_id: data.company_id,
+                },
+                this.user?.email
+              )
+              .subscribe(
+                (data) => {
+                  if (data) {
+                    this.router.navigateByUrl('/');
+                  }
+                },
+                (err) => {
+                  alert('Error ' + err);
+                }
+              );
           }
         },
         (err) => {

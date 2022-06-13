@@ -25,11 +25,12 @@ function authenticateToken(req, res, next) {
 router.get('/', authenticateToken, (req, res) => res.status(200).send({ message: 'Auth success' }));
 router.get('/user', authenticateToken, userController.userList);
 router.get('/event', authenticateToken, eventController.eventList);
-router.get('/event/:event_id', eventController.eventSearch);
+router.get('/event/:event_id', authenticateToken, eventController.eventSearch);
 router.get('/company', authenticateToken, companyController.companyList);
+router.get('/company/:company_id/events', authenticateToken, companyController.companyEvents);
 router.get('/exchange', authenticateToken, exchangeController.exchangeList);
 
-router.post('/user', authenticateToken, userController.userCreate);
+router.post('/user', userController.userCreate);
 router.post('/company', authenticateToken, companyController.companyCreate);
 router.post('/event', authenticateToken, eventController.eventCreate);
 router.post('/exchange', authenticateToken, exchangeController.exchangeCreate);

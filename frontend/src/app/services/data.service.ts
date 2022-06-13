@@ -19,6 +19,9 @@ export class DataService {
   eventsList(): Observable<any> {
     return this.http.get(apiUrl + 'event', httpOptions);
   }
+  companyEvents(company_id: any): Observable<any> {
+    return this.http.get(apiUrl + `company/${company_id}/events`, httpOptions);
+  }
   usersList(): Observable<any> {
     return this.http.get(apiUrl + 'user', httpOptions);
   }

@@ -44,6 +44,7 @@
           type="button"
           (click)="joinClick()"
           class="btn btn-link px-3 me-2"
+          *ngIf="!hasteam && !admin"
         >
           Join Team
         </button>
@@ -51,9 +52,13 @@
           type="button"
           (click)="createClick()"
           class="btn btn-primary me-3"
+          *ngIf="admin && !hasteam"
         >
           Create Team
         </button>
+        <a class="btn btn-light me-3 px-3" href="/profile" role="button"
+          ><i class="fa-solid fa-user"></i> {{ username }}</a
+        >
         <button
           type="button"
           (click)="logoutClick()"

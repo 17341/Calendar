@@ -49,7 +49,22 @@ exports.userByToken = async function (req, res) {
     })
         .then(data => {
             if (data) {
-                res.json(data);
+                db.User.findOne({
+                    where: {
+                        email: data.email
+                    }
+                })
+                    .then(data2 => {
+                        if (data2) {
+                            res.json(data2)
+                        }
+                        else {
+                            res.status(404).json({ message: "Incorrect login" })
+                        }
+                    })
+                    .catch(err => {
+                        res.status(500).json({ message: err.message })
+                    })
             } else {
                 res.status(404).json({ message: "Incorrect token" })
             }

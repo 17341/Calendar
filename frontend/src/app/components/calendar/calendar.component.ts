@@ -2,7 +2,9 @@ import { Component, OnInit, Input, ViewChild, Output } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular';
 import { DataService } from '../../services/data.service';
 import { ModifyModalComponent } from '../../components/modify-modal/modify-modal.component';
+import { ExchangeModalComponent } from '../../components/exchange-modal/exchange-modal.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-calendar',
@@ -11,46 +13,62 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 })
 export class CalendarComponent implements OnInit {
   @Input() view: any;
+  user: any;
 
   modalRef: MdbModalRef<ModifyModalComponent> | null = null;
   calendarOptions: CalendarOptions = {
     // headerToolbar: { center: 'dayGridMonth,timeGridWeek,listWeek,dayGridWeek' },
+    //dateClick: this.handleDateClick.bind(this),
     eventClick: this.eventClick.bind(this),
     initialView: 'dayGridMonth',
-    dateClick: this.handleDateClick.bind(this),
     events: [],
     height: 700,
     eventDrop: this.handleUpdate.bind(this),
     eventResize: this.handleUpdate.bind(this),
   };
 
-  handleDateClick(arg: any) {
-    console.log(arg);
-  }
+  // handleDateClick(arg: any) {
+  //   console.log(arg);
+  // }
 
   @ViewChild('calendar', { static: true }) calendar: any;
 
   constructor(
+    private authService: AuthenticationService,
     private dataService: DataService,
     private modalService: MdbModalService
   ) {}
 
   ngOnInit(): void {
-    let events: any = [];
-    this.dataService.eventsList().subscribe(
+    this.authService.userByToken().subscribe(
       (data) => {
-        data.forEach((event: any) => {
-          events.push({
-            title: event.user_id,
-            start: event.start_at,
-            end: event.end_at,
-            editable: true,
-            durationEditable: true,
-            description: event.description,
-            id: event.event_id,
-          });
-        });
-        this.calendarOptions.events = events;
+        if (data) {
+          this.user = data;
+          let events: any = [];
+
+          this.dataService.companyEvents(Number(data.company_id)).subscribe(
+            (data2) => {
+              data2.forEach((user: any) => {
+                user.events.forEach((event: any) => {
+                  events.push({
+                    title: event.user_id,
+                    start: event.start_at,
+                    end: event.end_at,
+                    editable: this.user.role == 'Team Leader' ? true : false,
+                    durationEditable:
+                      this.user.role == 'Team Leader' ? true : false,
+                    description: event.description,
+                    id: event.event_id,
+                  });
+                });
+              });
+              this.calendarOptions.events = events;
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
+        }
       },
       (err) => {
         console.log(err);
@@ -76,8 +94,12 @@ export class CalendarComponent implements OnInit {
     );
   }
   eventClick(info: any) {
-    info.el.style.backgroundColor = 'red';
+    // info.el.style.backgroundColor = 'red';
     localStorage.setItem('selectedEvent', info.event.id);
-    this.modalRef = this.modalService.open(ModifyModalComponent);
+    if (this.user.role == 'Team Leader') {
+      this.modalRef = this.modalService.open(ModifyModalComponent);
+    } else {
+      this.modalRef = this.modalService.open(ExchangeModalComponent);
+    }
   }
 }

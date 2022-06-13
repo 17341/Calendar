@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from '../../services/data.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-modal',
@@ -20,18 +21,28 @@ export class ModalComponent {
 
   constructor(
     public modalRef: MdbModalRef<ModalComponent>,
-    private dataService: DataService
+    private dataService: DataService,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
-    this.dataService.usersList().subscribe(
+    this.authService.userByToken().subscribe(
       (data) => {
         if (data) {
-          this.users = data;
+          this.dataService.companyEvents(Number(data.company_id)).subscribe(
+            (data2) => {
+              this.users = data2.filter(
+                (user: any) => user.role === 'Team Member'
+              );
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
         }
       },
       (err) => {
-        alert('Error ' + err);
+        console.log(err);
       }
     );
   }

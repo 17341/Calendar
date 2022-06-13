@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from 'src/app/services/data.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-join-page',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class JoinPageComponent implements OnInit {
   companies: any;
+  user: any;
 
   form = new FormGroup({
     company: new FormControl('', Validators.compose([Validators.required])),
@@ -23,7 +25,8 @@ export class JoinPageComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private sharedService: SharedServiceService,
-    private router: Router
+    private router: Router,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +40,16 @@ export class JoinPageComponent implements OnInit {
         alert('Error ' + err);
       }
     );
+    this.authService.userByToken().subscribe(
+      (data) => {
+        if (data) {
+          this.user = data;
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
   onSubmit(): void {
     this.companies.forEach((company: any) => {
@@ -47,7 +60,7 @@ export class JoinPageComponent implements OnInit {
               {
                 company_id: this.form.get('company')?.value,
               },
-              this.sharedService.getUser()?.email
+              this.user.email
             )
             .subscribe(
               (data) => {

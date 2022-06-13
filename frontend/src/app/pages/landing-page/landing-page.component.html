@@ -5,7 +5,9 @@
   <div
     style="display: flex; flex-direction: row; justify-content: space-around"
   >
-    <button class="btn btn-primary" (click)="onAdd()">Add event</button>
+    <button *ngIf="admin && hasteam" class="btn btn-primary" (click)="onAdd()">
+      Add event
+    </button>
     <select [ngModel]="selected" (ngModelChange)="onChange($event)">
       <option value="dayGridMonth">Month View</option>
       <option value="timeGridWeek">TimeGrid View</option>

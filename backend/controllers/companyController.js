@@ -49,3 +49,25 @@ exports.companyDelete = async function (req, res) {
     }
     else res.status(400).json({ message: 'company not found' })
 };
+
+exports.companyEvents = async function (req, res) {
+    await db.Company.findAll({
+        where: { company_id: req.params.company_id },
+        include: { model: db.User }
+    })
+        .then(data => {
+            db.User.findAll({
+                where: { company_id: req.params.company_id },
+                include: { model: db.Event }
+            })
+                .then(data => {
+                    res.json(data)
+                })
+                .catch(err => {
+                    res.status(500).json({ 'message': err.message })
+                })
+        })
+        .catch(err => {
+            res.status(500).json({ 'message': err.message })
+        })
+}

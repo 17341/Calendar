@@ -9,12 +9,28 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  admin = false;
+  hasteam = false;
+  username: any;
   constructor(
     private authService: AuthenticationService,
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.userByToken().subscribe(
+      (data) => {
+        if (data) {
+          data.role == 'Team Leader' ? (this.admin = true) : false;
+          data.company_id != null ? (this.hasteam = true) : false;
+          this.username = `${data.first_name} ${data.last_name}`;
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 
   createClick() {
     this.router.navigateByUrl('/create');
