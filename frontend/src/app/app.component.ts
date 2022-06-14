@@ -22,7 +22,7 @@ export class AppComponent {
         }
       },
       (err) => {
-        console.log(err);
+        //console.log(err);
       }
     );
   }

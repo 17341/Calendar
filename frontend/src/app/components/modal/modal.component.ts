@@ -36,13 +36,13 @@ export class ModalComponent {
               );
             },
             (err) => {
-              console.log(err);
+              //console.log(err);
             }
           );
         }
       },
       (err) => {
-        console.log(err);
+        //console.log(err);
       }
     );
   }
@@ -56,7 +56,7 @@ export class ModalComponent {
       start_at: this.form.get('start')?.value,
       end_at: this.form.get('end')?.value,
       description: this.form.get('description')?.value,
-      status: 'Free',
+      status: 'Taken',
       user_id: this.form.get('user')?.value,
     };
 

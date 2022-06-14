@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
-import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { MyExchangesModalComponent } from '../my-exchanges-modal/my-exchanges-modal.component';
 
 @Component({
   selector: 'app-header',
@@ -14,8 +15,10 @@ export class HeaderComponent implements OnInit {
   username: any;
   constructor(
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private modalService: MdbModalService
   ) {}
+  modalRef: MdbModalRef<MyExchangesModalComponent> | null = null;
 
   ngOnInit(): void {
     this.authService.userByToken().subscribe(
@@ -27,7 +30,7 @@ export class HeaderComponent implements OnInit {
         }
       },
       (err) => {
-        console.log(err);
+        //console.log(err);
       }
     );
   }
@@ -40,6 +43,10 @@ export class HeaderComponent implements OnInit {
   }
   navbarClick() {
     //this.router.navigateByUrl('/');
+  }
+
+  exchangesClick() {
+    this.modalRef = this.modalService.open(MyExchangesModalComponent);
   }
 
   logoutClick() {

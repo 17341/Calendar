@@ -36,13 +36,13 @@ export class ModifyModalComponent implements OnInit {
               );
             },
             (err) => {
-              console.log(err);
+              //console.log(err);
             }
           );
         }
       },
       (err) => {
-        console.log(err);
+        //console.log(err);
       }
     );
     this.dataService
@@ -80,18 +80,19 @@ export class ModifyModalComponent implements OnInit {
       end_at: this.form.get('end')?.value,
       description: this.form.get('description')?.value,
       user_id: this.form.get('user')?.value,
+      status: 'Taken',
     };
 
     this.dataService
       .updateEvent(newEvent, Number(localStorage.getItem('selectedEvent')))
       .subscribe(
         (data) => {
-          console.log('Updated event');
+          alert('Updated event');
           this.modalRef.close();
           window.location.reload();
         },
         (err) => {
-          console.log(err);
+          //console.log(err);
         }
       );
   }
@@ -100,12 +101,12 @@ export class ModifyModalComponent implements OnInit {
       .deleteEvent(Number(localStorage.getItem('selectedEvent')))
       .subscribe(
         (data) => {
-          console.log('Event deleted');
+          //console.log('Event deleted');
           this.modalRef.close();
           window.location.reload();
         },
         (err) => {
-          console.log(err);
+          //console.log(err);
         }
       );
   }

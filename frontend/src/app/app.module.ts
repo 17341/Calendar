@@ -41,6 +41,7 @@ import { CreatePageComponent } from './pages/create-page/create-page.component';
 import { ModifyModalComponent } from './components/modify-modal/modify-modal.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { ExchangeModalComponent } from './components/exchange-modal/exchange-modal.component';
+import { MyExchangesModalComponent } from './components/my-exchanges-modal/my-exchanges-modal.component';
 
 FullCalendarModule.registerPlugins([
   listPlugin,
@@ -65,6 +66,7 @@ FullCalendarModule.registerPlugins([
     ModifyModalComponent,
     ProfilePageComponent,
     ExchangeModalComponent,
+    MyExchangesModalComponent,
   ],
   imports: [
     ReactiveFormsModule,

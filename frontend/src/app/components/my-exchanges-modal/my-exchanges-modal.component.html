@@ -1,0 +1,83 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">My Exchanges</h5>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="modalRef.close()"
+  ></button>
+</div>
+<h5 style="text-align: center">Exchanges Received</h5>
+<div class="modal-body">
+  <div class="list-group">
+    <div
+      *ngFor="let exchange of receivedExchanges"
+      class="list-group-item list-group-item-action"
+    >
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        "
+      >
+        <h6>Id : {{ exchange.event_id }}</h6>
+        <h6>Status : {{ exchange.status }}</h6>
+        <button
+          type="button"
+          (click)="declineClick(exchange)"
+          class="btn btn-danger"
+        >
+          <i class="fa-solid fa-x"></i>
+          Decline
+        </button>
+        <button
+          type="button"
+          (click)="acceptClick(exchange)"
+          class="btn btn-success"
+        >
+          <i class="fa-solid fa-check"></i>
+          Accept
+        </button>
+        <!-- <button (click)="declineClick(exchange)">Decline</button>
+        <button (click)="acceptClick(exchange)">
+          <i class="fa-solid fa-check"></i>Accept
+        </button> -->
+      </div>
+    </div>
+    <h6
+      tyle="text-align: center; color: red"
+      *ngIf="receivedExchanges.length == 0"
+    >
+      No exchanges received
+    </h6>
+  </div>
+  <h5 style="text-align: center">Exchanges Sent</h5>
+  <div class="list-group">
+    <div
+      *ngFor="let exchange of sentExchanges"
+      class="list-group-item list-group-item-action"
+    >
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        "
+      >
+        <h6>Id : {{ exchange.event_id }}</h6>
+        <h6>Status : {{ exchange.status }}</h6>
+        <button
+          type="button"
+          (click)="deleteClick(exchange)"
+          class="btn btn-danger"
+        >
+          <i class="fa-solid fa-x"></i>
+        </button>
+      </div>
+    </div>
+    <h6 tyle="text-align: center; color: red" *ngIf="sentExchanges.length == 0">
+      No exchanges sent
+    </h6>
+  </div>
+</div>

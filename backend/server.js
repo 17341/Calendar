@@ -13,7 +13,7 @@ app.use(cors({
 const db = require('./db.js')
 
 // Creating all the tables
-// db.sync({ force: true })
+//db.sync({ force: true })
 db.sync();
 
 let router = require('./routes');
@@ -21,5 +21,5 @@ app.use("/", router)
 
 // Launch app to listen to specified port
 app.listen(8000, function () {
-    console.log('Runnings on port 8000');
+    //console.log('Runnings on port 8000');
 })

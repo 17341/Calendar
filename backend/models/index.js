@@ -20,6 +20,7 @@ db.Exchange.belongsTo(db.Event, { foreignKey: "event_id" });
 db.User.hasMany(db.Event, { foreignKey: "user_id" });
 db.Event.belongsTo(db.User, { foreignKey: "user_id" });
 
-db.Exchange.belongsTo(db.User, { foreignKey: "user_id" });
+db.Exchange.belongsTo(db.User, { foreignKey: "from_user_id" });
+db.Exchange.belongsTo(db.User, { foreignKey: "to_user_id" });
 
 module.exports = db;

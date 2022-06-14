@@ -54,6 +54,18 @@ export class CalendarComponent implements OnInit {
                     title: event.user_id,
                     start: event.start_at,
                     end: event.end_at,
+                    backgroundColor:
+                      event.status === 'Free'
+                        ? 'orange'
+                        : this.user.user_id === event.user_id
+                        ? 'green'
+                        : null,
+                    borderColor:
+                      event.status === 'Free'
+                        ? 'orange'
+                        : this.user.user_id === event.user_id
+                        ? 'green'
+                        : null,
                     editable: this.user.role == 'Team Leader' ? true : false,
                     durationEditable:
                       this.user.role == 'Team Leader' ? true : false,

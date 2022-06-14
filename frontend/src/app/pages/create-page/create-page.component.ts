@@ -39,13 +39,13 @@ export class CreatePageComponent implements OnInit {
         }
       },
       (err) => {
-        console.log(err);
+        //console.log(err);
       }
     );
   }
 
   onSubmit(): void {
-    console.log(this.form.get('users')?.value);
+    //console.log(this.form.get('users')?.value);
     if (this.form.invalid) {
       alert('Invalid form');
       return;

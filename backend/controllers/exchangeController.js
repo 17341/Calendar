@@ -12,10 +12,11 @@ exports.exchangeList = async function (req, res) {
 };
 
 exports.exchangeCreate = async function (req, res) {
-    let exchange = await Exchange.create({
+    await Exchange.create({
         status: req.body.status,
         event_id: req.body.event_id,
-        exchange_id: req.body.exchange_id
+        from_user_id: req.body.from_user_id,
+        to_user_id: req.body.to_user_id
     }).then(data => {
         res.json(data);
     }).catch(err => {
@@ -50,3 +51,27 @@ exports.exchangeDelete = async function (req, res) {
     }
     else res.status(400).json({ message: 'exchange not found' })
 };
+
+// exports.userExchanges = async function (req, res) {
+//     await db.Exchange.findAll({
+//         where: { to_user_id: req.params.user_id }
+//     })
+//         .then(data => {
+//             res.json(data)
+//         })
+//         .catch(err => {
+//             res.status(500).json({ 'message': err.message })
+//         })
+// }
+
+// exports.myExchanges = async function (req, res) {
+//     await db.Exchange.findAll({
+//         where: { from_user_id: req.params.user_id }
+//     })
+//         .then(data => {
+//             res.json(data)
+//         })
+//         .catch(err => {
+//             res.status(500).json({ 'message': err.message })
+//         })
+// }

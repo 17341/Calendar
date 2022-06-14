@@ -43,9 +43,10 @@ exports.eventUpdate = async function (req, res) {
 exports.eventSearch = async function (req, res) {
     if (req.params.event_id > 0) {
         await Event.findOne(
-            req.body, { where: { event_id: req.params.event_id } }
+            { where: { event_id: req.params.event_id }, include: { model: db.User } }
         )
             .then(data => {
+                //console.log(data)
                 res.json(data);
             })
             .catch(err => {

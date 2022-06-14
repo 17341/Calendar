@@ -46,4 +46,20 @@ export class DataService {
   searchEvent(event_id: any): Observable<any> {
     return this.http.get(apiUrl + `event/${event_id}`, httpOptions);
   }
+  addExchange(exchange: any): Observable<any> {
+    return this.http.post(apiUrl + `exchange`, exchange, httpOptions);
+  }
+  exchangeList(): Observable<any> {
+    return this.http.get(apiUrl + `exchange`, httpOptions);
+  }
+  updateExchange(exchange: any, exchange_id: any): Observable<any> {
+    return this.http.put(
+      apiUrl + `exchange/${exchange_id}`,
+      exchange,
+      httpOptions
+    );
+  }
+  deleteExchange(exchange_id: any): Observable<any> {
+    return this.http.delete(apiUrl + `exchange/${exchange_id}`, httpOptions);
+  }
 }

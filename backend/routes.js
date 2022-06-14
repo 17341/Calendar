@@ -29,6 +29,8 @@ router.get('/event/:event_id', authenticateToken, eventController.eventSearch);
 router.get('/company', authenticateToken, companyController.companyList);
 router.get('/company/:company_id/events', authenticateToken, companyController.companyEvents);
 router.get('/exchange', authenticateToken, exchangeController.exchangeList);
+// router.get('/exchange/:user_id/received', authenticateToken, exchangeController.userExchanges);
+// router.get('/exchange/:user_id/sent', authenticateToken, exchangeController.userExchanges);
 
 router.post('/user', userController.userCreate);
 router.post('/company', authenticateToken, companyController.companyCreate);
